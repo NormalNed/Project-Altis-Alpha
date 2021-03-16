@@ -2,9 +2,6 @@
 cd ..
 title Project Altis AI
 
-rem Read the contents of PPYTHON_PATH into %PPYTHON_PATH%:
-set /P PYTHON_PATH=<PYTHON_PATH
-
 rem Define some constants for our AI server:
 set MAX_CHANNELS=999999
 set STATESERVER=4002
