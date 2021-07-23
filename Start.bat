@@ -98,9 +98,9 @@ echo = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 echo Username [!] This does get stored in your source code so beware!
 echo = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 set /P ttUsername="Username: "
-set TT_PLAYCOOKIE=%ttUsername%
-set TT_USERNAME=%ttUsername%
-set TT_PASSWORD=%ttUsername%
+set TT_PLAYCOOKIE=%ttUsername%#ALTIS
+set TT_USERNAME=%ttUsername%#ALTIS
+set TT_PASSWORD=%ttUsername%#ALTIS
 echo.
 cls
 echo = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =

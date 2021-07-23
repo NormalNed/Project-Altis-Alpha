@@ -1054,49 +1054,21 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
         self.account2fsm[sender].request('Start', *args)
 
     def login(self, cookie, authKey):
-        #sender = self.air.getMsgSender()
-        #hwid = cookie.split("#")[1]
-        #backupCookie = cookie.split("#")[0]
-        #cookie = cookie.split("#")[0]
-        #self.pendingLogins[sender] = (sender, hwid, backupCookie, cookie, authKey)
-        ## CLIENTAGENT_GET_NETWORK_ADDRESS is defined in OtpDoGlobals for backwards compatibility with old versions of Panda3D
-        #datagram = PyDatagram()
-        #datagram.addServerHeader(sender, self.air.ourChannel, OtpDoGlobals.CLIENTAGENT_GET_NETWORK_ADDRESS)
-        #datagram.addUint32(sender)
-        #self.air.send(datagram)
-        #login = self.pendingLogins.get(context)
-        #if not login:
-        #    return
-        #sender = login[0]
-        #hwid = login[1]
-        #backupCookie = login[2]
-        #cookie = login[3]
-        #authKey = login[4]
-        #apiKey = str(ConfigVariableString('ws-key', 'secretkey'))
-        #del self.pendingLogins[context]
-        ## Time to check this login to see if its authentic
-        #digest_maker = hmac.new(self.key)
-        #digest_maker.update(backupCookie)
-#
-        #if not hmac.compare_digest(digest_maker.hexdigest(), authKey):
-        #    # recieved a bad authentication key from the client, drop there connection!
-        #    self.killConnection(sender, 'Failed to login, recieved a bad login cookie %s!' % (cookie))
-        #    return
-#
-        #if sender >> 32:
-        #    self.killConnection(sender, 'Failed to login, client is already logged in.')
-        #    return
-#
-        #if sender in self.connection2fsm:
-        #    self.killConnectionFSM(sender)
-        #    return
-#
+        sender = self.air.getMsgSender()
+        self.notify.debug('Received login cookie %r from %d' % (cookie, sender))
+        digest_maker = hmac.new(self.key)
+        digest_maker.update(cookie)
         self.connection2fsm[sender] = LoginAccountFSM(self, sender)
-        #self.connection2fsm[sender].request('Start', cookie, ip)
+        self.connection2fsm[sender].request('Start', cookie)
 
     def requestAvatars(self):
         self.notify.debug('Received avatar list request from %d' % (self.air.getMsgSender()))
         self.runAccountFSM(GetAvatarsFSM)
+
+    def requestMOTD(self):
+        acc = self.air.getAccountIdFromSender()
+        motd = '[SHOULD NOT SEE]'
+        self.sendUpdateToAccountId(acc, 'setMOTD', [motd])
 
     def createAvatar(self, dna, index, uber, tracks, pg):
         self.runAccountFSM(CreateAvatarFSM, dna, index, uber, tracks, pg)

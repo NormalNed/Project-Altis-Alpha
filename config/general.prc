@@ -153,7 +153,7 @@ prop-idle-pause-time 0.0
 want-charity-screen #t
 
 # Developer options:
-want-dev #f
+want-dev #t
 want-pstats #f
 want-directtools #f
 want-tk #f
