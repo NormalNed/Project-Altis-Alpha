@@ -12,8 +12,8 @@ from direct.extensions_native import VBase4_extensions
 from direct.extensions_native import NodePath_extensions
 from panda3d.core import *
 
-loadPrcFile('config/general.prc')
-loadPrcFile('config/release/dev.prc')
+loadPrcFile('dependencies/config/general.prc')
+loadPrcFile('dependencies/config/release/dev.prc')
 
 from direct.directnotify.DirectNotifyGlobal import directNotify
 from otp.settings.Settings import Settings
@@ -22,7 +22,7 @@ notify = directNotify.newCategory('AltisClient')
 notify.setInfo(True)
 
 preferencesFilename = ConfigVariableString(
-    'preferences-filename', 'preferences.json').getValue()
+    'preferences-filename', 'user/preferences.json').getValue()
 notify.info('Reading %s...' % preferencesFilename)
 __builtin__.settings = Settings(preferencesFilename)
 from toontown.settings import ToontownSettings

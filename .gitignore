@@ -104,7 +104,7 @@ ENV/
 .DS_Store
 
 # Game-specific files and directories:
-preferences.json
+user/
 logs/
 screenshots/
 backups/
