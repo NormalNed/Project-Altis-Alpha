@@ -122,8 +122,9 @@ class DeveloperAccountDB(AccountDB):
 
 class LocalAccountDB(AccountDB):
     notify = directNotify.newCategory('LocalAccountDB')
-
+    
     def lookup(self, username, callback):
+        cookie = username
         if str(cookie) not in self.dbm:
             # Nope. Let's associate them with a brand new Account object!
             response = {
@@ -1004,6 +1005,7 @@ class ClientServicesManagerUD(DistributedObjectGlobalUD):
 
     def announceGenerate(self):
         DistributedObjectGlobalUD.announceGenerate(self)
+        self.accountDB = LocalAccountDB(self)
 
         # These keep track of the connection/account IDs currently undergoing an
         # operation on the CSM. This is to prevent (hacked) clients from firing up more
